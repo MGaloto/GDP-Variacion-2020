@@ -1,0 +1,134 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+
+
+
+
+```{r}
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Variacion % en el año de la pandemia del PIB per cápita (US$ a precios actuales) de los paises de # # sur y centro America.
+#
+# From: https://datos.bancomundial.org/indicador/NY.GDP.PCAP.CD?locations=AR
+# --------------------------------------------------------------------------------------- #
+
+library(tidyr)
+library(miscset)
+library(ggplot2)
+library(corrplot) 
+library(GGally)
+library(readr)  
+library(dplyr)  
+library(crayon) 
+library(modeest)
+library(readxl)
+library(plotly)
+library(ggthemes)
+library(reshape)
+
+
+
+```
+
+
+
+
+```{r}
+
+# --------------------------------------------------------------------------------------- #
+
+#Ruta de ubicacion del archivo
+
+setwd("C:/Users/54116/Desktop/Carpetas/Trabajos en R/Banco Mundial")
+
+dir()
+
+
+# --------------------------------------------------------------------------------------- #
+
+
+# Data Set con valores del pib per capita
+
+gdp1 = read_excel("GDP1.xls")
+
+
+
+
+# --------------------------------------------------------------------------------------- #
+
+```
+
+
+
+
+
+```{r}
+
+# --------------------------------------------------------------------------------------- #
+
+# Variables para grafico de caida del PIB
+
+names(gdp1)
+
+Arg = round(( gdp1$Argentina[length(gdp$Argentina)] - gdp1$Argentina[length(gdp1$Argentina) -1] ) / gdp1$Argentina[length(gdp1$Argentina) -1],4) * 100
+
+Bol = round(( gdp1$Bolivia[length(gdp$Bolivia)] - gdp1$Bolivia[length(gdp1$Bolivia) -1] ) / gdp1$Bolivia[length(gdp1$Bolivia) -1],4) * 100
+
+Bra = round(( gdp1$Brasil[length(gdp$Brasil)] - gdp1$Brasil[length(gdp1$Brasil) -1] ) / gdp1$Brasil[length(gdp1$Brasil) -1],4) * 100
+
+Chi = round(( gdp1$Chile[length(gdp$Chile)] - gdp1$Chile[length(gdp1$Chile) -1] ) / gdp1$Chile[length(gdp1$Chile) -1],4) * 100
+
+Col = round(( gdp1$Colombia[length(gdp$Colombia)] - gdp1$Colombia[length(gdp1$Colombia) -1] ) / gdp1$Colombia[length(gdp1$Colombia) -1],4) * 100
+
+
+Ecu = round(( gdp1$Ecuador[length(gdp$Ecuador)] - gdp1$Ecuador[length(gdp1$Ecuador) -1] ) / gdp1$Ecuador[length(gdp1$Ecuador) -1],4) * 100
+
+Mex = round(( gdp1$México[length(gdp$México)] - gdp1$México[length(gdp1$México) -1] ) / gdp1$México[length(gdp1$México) -1],4) * 100
+
+Per = round(( gdp1$Perú[length(gdp$Perú)] - gdp1$Perú[length(gdp1$Perú) -1] ) / gdp1$Perú[length(gdp1$Perú) -1],4) * 100
+
+Par = round(( gdp1$Paraguay[length(gdp$Paraguay)] - gdp1$Paraguay[length(gdp1$Paraguay) -1] ) / gdp1$Paraguay[length(gdp1$Paraguay) -1],4) * 100
+
+
+Uru = round(( gdp1$Uruguay[length(gdp$Uruguay)] - gdp1$Uruguay[length(gdp1$Uruguay) -1] ) / gdp1$Uruguay[length(gdp1$Uruguay) -1],4) * 100
+
+Ven = round(( gdp1$Venezuela[length(gdp$Venezuela)] - gdp1$Venezuela[length(gdp1$Venezuela) -1] ) / gdp1$Venezuela[length(gdp1$Venezuela) -1],4) * 100
+
+# --------------------------------------------------------------------------------------- #
+
+
+# Data Set con las variables
+
+x = c("Arg", "Bol", "Bra", "Chi", "Col", "Ecu", "Mex", "Per", "Par", "Uru", "Ven")
+
+y = c(Arg, Bol, Bra, Chi, Col, Ecu, Mex, Per, Par, Uru, Ven)
+
+
+data = data.frame(x = x, y= y)
+
+# --------------------------------------------------------------------------------------- #
+
+# Grafico
+
+ggplot(data) +
+  geom_col(aes(x=x, y=y*-1, fill = x), color = "black" , show.legend = F) +
+  labs(x = "Paises", y= "% Caida PIB", caption = "Elaboracion propia en base a datos del Banco Mundial", title = "% Caida Pib Per Capita 2020")+
+  scale_fill_manual(breaks = unique(x), values = c("Arg" = "#2e90db", "Bol" = "#33e857","Bra" = "#e4f500" ,
+                                                 "Chi" = "#cc0a0a" , "Col" = "#afbf19" , 
+                                                "Ecu" = "#1319b0" , "Mex" = "#0b733a",
+                                               "Per" = "#783535", "Par" = "Pink",
+                                              "Uru" = "#00d9ed", "Ven"= "Yellow" )) +
+  theme(plot.title = element_text(hjust=0.5),
+        plot.background = element_rect(fill = "#e3e4e6"),
+        panel.background = element_rect(fill = "#e3e4e6"))
+
+
+# --------------------------------------------------------------------------------------- #
+
+
+```
+
